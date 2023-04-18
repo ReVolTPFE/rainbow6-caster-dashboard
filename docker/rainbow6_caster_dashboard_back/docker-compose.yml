@@ -1,0 +1,19 @@
+version: '3'
+services:
+  lamp:
+    build: ./
+    # restart: always
+    user: "1000:1000"
+    ports:
+      - 8080:80
+    depends_on:
+      - maildev
+    volumes:
+      - ./php.ini:/usr/local/etc/php/conf.d/more_upload_size.ini
+      - ../../:/var/www/html
+  maildev:
+    image: maildev/maildev:1.1.0
+    # restart: always
+    ports:
+      - 8081:80
+      - 25:25
