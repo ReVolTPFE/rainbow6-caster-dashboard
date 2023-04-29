@@ -19,6 +19,10 @@ COPY --from=composer:2.4 /usr/bin/composer /usr/local/bin/composer
 #     && tar -xf symfony-cli_linux_amd64.tar.gz \
 #     && mv /root/symfony /usr/local/bin/symfony
 
+# MySQL install
+RUN docker-php-ext-install -j$(nproc) mysqli
+RUN docker-php-ext-install -j$(nproc) pdo_mysql
+
 # OPcache install
 RUN docker-php-ext-install -j$(nproc) opcache
 

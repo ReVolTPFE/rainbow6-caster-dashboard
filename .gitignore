@@ -7,3 +7,6 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+docker/rainbow6_caster_dashboard_back/.database
+migrations/*.php
