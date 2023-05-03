@@ -13,13 +13,13 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/api/maps')]
 class MapController extends AbstractController
 {
-    #[Route('/', name: 'app_maps_get_maps', methods: ['GET'])]
+    #[Route('', name: 'app_maps_get_maps', methods: ['GET'])]
     public function getMaps(MapRepository $mapRepository, SerializerInterface $serializer): JsonResponse
     {
         $maps = $mapRepository->findAll();
         $jsonMaps = $serializer->serialize($maps, 'json');
 
-        return new JsonResponse($jsonMaps, Response::HTTP_OK, [], true);
+        return new JsonResponse($jsonMaps, Response::HTTP_OK, ['accept' => 'json'], true);
     }
 
     #[Route('/{id}', name: 'app_maps_get_one_map', methods: ['GET'])]
