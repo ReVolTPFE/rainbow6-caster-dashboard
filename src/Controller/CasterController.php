@@ -60,8 +60,6 @@ class CasterController extends AbstractController
         return new JsonResponse($jsonCaster, Response::HTTP_CREATED, ['accept' => 'json'], true);
     }
 
-
-
     #[Route('/{id}', name: 'app_casters_get_one_caster', methods: ['GET'])]
     public function getOneCaster(Caster $caster, SerializerInterface $serializer): JsonResponse
     {
