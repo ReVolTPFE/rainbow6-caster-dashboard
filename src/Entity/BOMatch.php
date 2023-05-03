@@ -41,6 +41,9 @@ class BOMatch
     #[ORM\JoinColumn(nullable: false)]
     private ?Caster $caster = null;
 
+    #[ORM\ManyToOne(inversedBy: 'bOMatches')]
+    private ?Team $winnerTeam = null;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
@@ -180,6 +183,18 @@ class BOMatch
     public function setCaster(?Caster $caster): self
     {
         $this->caster = $caster;
+
+        return $this;
+    }
+
+    public function getWinnerTeam(): ?Team
+    {
+        return $this->winnerTeam;
+    }
+
+    public function setWinnerTeam(?Team $winnerTeam): self
+    {
+        $this->winnerTeam = $winnerTeam;
 
         return $this;
     }

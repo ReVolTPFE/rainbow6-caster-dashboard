@@ -37,11 +37,15 @@ class Team
     #[ORM\OneToMany(mappedBy: 'winnerTeam', targetEntity: Round::class)]
     private Collection $rounds;
 
+    #[ORM\OneToMany(mappedBy: 'winnerTeam', targetEntity: BOMatch::class)]
+    private Collection $bOMatches;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
         $this->teamBOMatches = new ArrayCollection();
         $this->rounds = new ArrayCollection();
+        $this->bOMatches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -181,6 +185,36 @@ class Team
             // set the owning side to null (unless already changed)
             if ($round->getWinnerTeam() === $this) {
                 $round->setWinnerTeam(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BOMatch>
+     */
+    public function getBOMatches(): Collection
+    {
+        return $this->bOMatches;
+    }
+
+    public function addBOMatch(BOMatch $bOMatch): self
+    {
+        if (!$this->bOMatches->contains($bOMatch)) {
+            $this->bOMatches->add($bOMatch);
+            $bOMatch->setWinnerTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBOMatch(BOMatch $bOMatch): self
+    {
+        if ($this->bOMatches->removeElement($bOMatch)) {
+            // set the owning side to null (unless already changed)
+            if ($bOMatch->getWinnerTeam() === $this) {
+                $bOMatch->setWinnerTeam(null);
             }
         }
 
