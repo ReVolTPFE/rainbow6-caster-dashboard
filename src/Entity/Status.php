@@ -14,15 +14,15 @@ class Status
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["status:read", "match:read"])]
+    #[Groups(["status:read", "match:read", "game:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["status:read", "match:read"])]
+    #[Groups(["status:read", "match:read", "game:read"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["status:read", "match:read"])]
+    #[Groups(["status:read", "match:read", "game:read"])]
     private ?string $colorCode = null;
 
     #[ORM\OneToMany(mappedBy: 'status', targetEntity: Game::class)]

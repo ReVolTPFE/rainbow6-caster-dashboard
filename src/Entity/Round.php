@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RoundRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RoundRepository::class)]
 class Round
@@ -11,9 +12,11 @@ class Round
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["match:read", "game:read"])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(["match:read", "game:read"])]
     private ?int $roundNumber = null;
 
     #[ORM\ManyToOne(inversedBy: 'rounds')]
@@ -22,6 +25,7 @@ class Round
 
     #[ORM\ManyToOne(inversedBy: 'rounds')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["match:read", "game:read"])]
     private ?Team $winnerTeam = null;
 
     public function getId(): ?int

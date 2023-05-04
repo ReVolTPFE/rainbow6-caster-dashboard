@@ -16,7 +16,7 @@ class BOMatch
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["match:read"])]
+    #[Groups(["match:read", "game:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]

@@ -6,6 +6,7 @@ use App\Repository\GameRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
@@ -13,22 +14,28 @@ class Game
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["match:read", "game:read"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
+    #[Groups(["match:read", "game:read"])]
     private ?Map $map = null;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
+    #[Groups(["match:read", "game:read"])]
     private ?Status $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
+    #[Groups(["game:read"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?BOMatch $bOMatch = null;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
+    #[Groups(["match:read", "game:read"])]
     private ?Team $winnerTeam = null;
 
     #[ORM\OneToMany(mappedBy: 'game', targetEntity: Round::class)]
+    #[Groups(["match:read", "game:read"])]
     private Collection $rounds;
 
     public function __construct()

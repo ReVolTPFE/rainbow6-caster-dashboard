@@ -14,15 +14,15 @@ class Map
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["map:read"])]
+    #[Groups(["map:read", "game:read", "match:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["map:read"])]
+    #[Groups(["map:read", "game:read", "match:read"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["map:read"])]
+    #[Groups(["map:read", "game:read", "match:read"])]
     private ?string $slug = null;
 
     #[ORM\OneToMany(mappedBy: 'map', targetEntity: Game::class)]
