@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TeamBOMatchRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TeamBOMatchRepository::class)]
 class TeamBOMatch
@@ -11,10 +12,12 @@ class TeamBOMatch
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["match:read"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'teamBOMatches')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["match:read"])]
     private ?Team $team = null;
 
     #[ORM\ManyToOne(inversedBy: 'teamBOMatches')]

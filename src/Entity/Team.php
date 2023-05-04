@@ -14,24 +14,24 @@ class Team
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["user:read"])]
+    #[Groups(["user:read", "match:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["user:read"])]
+    #[Groups(["user:read", "match:read"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["user:read"])]
+    #[Groups(["user:read", "match:read"])]
     private ?string $logo = null;
 
     #[ORM\Column(length: 5)]
-    #[Groups(["user:read"])]
+    #[Groups(["user:read", "match:read"])]
     private ?string $tag = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["user:read"])]
+    #[Groups(["user:read", "match:read"])]
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'winnerTeam', targetEntity: Game::class)]

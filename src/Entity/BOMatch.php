@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\BOMatchRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BOMatchRepository::class)]
 class BOMatch
@@ -14,34 +16,44 @@ class BOMatch
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["match:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["match:read"])]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'bOMatches')]
+    #[Groups(["match:read"])]
     private ?Status $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'bOMatches')]
+    #[Groups(["match:read"])]
     private ?Gamemode $gamemode = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    #[Groups(["match:read"])]
+    private ?DateTimeInterface $date = null;
 
     #[ORM\Column]
+    #[Groups(["match:read"])]
     private array $banMap = [];
 
     #[ORM\OneToMany(mappedBy: 'bOMatch', targetEntity: Game::class, orphanRemoval: true)]
+    #[Groups(["match:read"])]
     private Collection $games;
 
     #[ORM\OneToMany(mappedBy: 'bOMatch', targetEntity: TeamBOMatch::class)]
+    #[Groups(["match:read"])]
     private Collection $teamBOMatches;
 
     #[ORM\ManyToOne(inversedBy: 'bOMatches')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["match:read"])]
     private ?Caster $caster = null;
 
     #[ORM\ManyToOne(inversedBy: 'bOMatches')]
+    #[Groups(["match:read"])]
     private ?Team $winnerTeam = null;
 
     public function __construct()
