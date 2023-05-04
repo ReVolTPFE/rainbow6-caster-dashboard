@@ -6,6 +6,7 @@ use App\Repository\MapRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MapRepository::class)]
 class Map
@@ -13,12 +14,15 @@ class Map
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["map:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["map:read"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["map:read"])]
     private ?string $slug = null;
 
     #[ORM\OneToMany(mappedBy: 'map', targetEntity: Game::class)]

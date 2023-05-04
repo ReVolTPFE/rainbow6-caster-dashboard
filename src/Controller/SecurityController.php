@@ -34,7 +34,7 @@ class SecurityController extends AbstractController
 
         $manager->flush();
 
-        $jsonUser = $serializer->serialize($user, 'json');
+        $jsonUser = $serializer->serialize($user, 'json', ['groups' => 'user:read']);
 
         return new JsonResponse($jsonUser, Response::HTTP_OK, ['accept' => 'json'], true);
     }

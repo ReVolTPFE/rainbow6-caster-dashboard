@@ -28,7 +28,7 @@ class TeamController extends AbstractController
     public function getTeams(TeamRepository $teamRepository, SerializerInterface $serializer): JsonResponse
     {
         $teams = $teamRepository->findAll();
-        $jsonTeams = $serializer->serialize($teams, 'json');
+        $jsonTeams = $serializer->serialize($teams, 'json', ['groups' => 'user:read']);
 
         return new JsonResponse($jsonTeams, Response::HTTP_OK, ['accept' => 'json'], true);
     }
@@ -55,7 +55,7 @@ class TeamController extends AbstractController
 
         $manager->flush();
 
-        $jsonTeam = $serializer->serialize($team, 'json');
+        $jsonTeam = $serializer->serialize($team, 'json', ['groups' => 'user:read']);
 
         return new JsonResponse($jsonTeam, Response::HTTP_CREATED, ['accept' => 'json'], true);
     }
@@ -63,7 +63,7 @@ class TeamController extends AbstractController
     #[Route('/{id}', name: 'app_teams_get_one_team', methods: ['GET'])]
     public function getOneTeam(Team $team, SerializerInterface $serializer): JsonResponse
     {
-        $jsonTeam = $serializer->serialize($team, 'json');
+        $jsonTeam = $serializer->serialize($team, 'json', ['groups' => 'user:read']);
 
         return new JsonResponse($jsonTeam, Response::HTTP_OK, ['accept' => 'json'], true);
     }
@@ -85,7 +85,7 @@ class TeamController extends AbstractController
 
         $manager->flush();
 
-        $jsonTeam = $serializer->serialize($team, 'json');
+        $jsonTeam = $serializer->serialize($team, 'json', ['groups' => 'user:read']);
 
         return new JsonResponse($jsonTeam, Response::HTTP_OK, ['accept' => 'json'], true);
     }

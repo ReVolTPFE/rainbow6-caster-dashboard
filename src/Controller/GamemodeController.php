@@ -16,7 +16,7 @@ class GamemodeController extends AbstractController
     public function getGamemodes(GamemodeRepository $gamemodeRepository, SerializerInterface $serializer): JsonResponse
     {
         $gamemodes = $gamemodeRepository->findAll();
-        $jsonGamemodes = $serializer->serialize($gamemodes, 'json', ['groups' => 'getGamemodes']);
+        $jsonGamemodes = $serializer->serialize($gamemodes, 'json', ['groups' => 'gamemode:read']);
 
         return new JsonResponse($jsonGamemodes, Response::HTTP_OK, ['accept' => 'json'], true);
     }

@@ -14,11 +14,11 @@ class Gamemode
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getGamemodes"])]
+    #[Groups(["gamemode:read", "match:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getGamemodes"])]
+    #[Groups(["gamemode:read", "match:read"])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'gamemode', targetEntity: BOMatch::class)]

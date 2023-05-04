@@ -28,7 +28,7 @@ class CasterController extends AbstractController
     public function getCasters(CasterRepository $casterRepository, SerializerInterface $serializer): JsonResponse
     {
         $casters = $casterRepository->findAll();
-        $jsonCasters = $serializer->serialize($casters, 'json');
+        $jsonCasters = $serializer->serialize($casters, 'json', ['groups' => 'user:read']);
 
         return new JsonResponse($jsonCasters, Response::HTTP_OK, ['accept' => 'json'], true);
     }
@@ -55,7 +55,7 @@ class CasterController extends AbstractController
 
         $manager->flush();
 
-        $jsonCaster = $serializer->serialize($caster, 'json');
+        $jsonCaster = $serializer->serialize($caster, 'json', ['groups' => 'user:read']);
 
         return new JsonResponse($jsonCaster, Response::HTTP_CREATED, ['accept' => 'json'], true);
     }
@@ -63,7 +63,7 @@ class CasterController extends AbstractController
     #[Route('/{id}', name: 'app_casters_get_one_caster', methods: ['GET'])]
     public function getOneCaster(Caster $caster, SerializerInterface $serializer): JsonResponse
     {
-        $jsonCaster = $serializer->serialize($caster, 'json');
+        $jsonCaster = $serializer->serialize($caster, 'json', ['groups' => 'user:read']);
 
         return new JsonResponse($jsonCaster, Response::HTTP_OK, ['accept' => 'json'], true);
     }
@@ -85,7 +85,7 @@ class CasterController extends AbstractController
 
         $manager->flush();
 
-        $jsonCaster = $serializer->serialize($caster, 'json');
+        $jsonCaster = $serializer->serialize($caster, 'json', ['groups' => 'user:read']);
 
         return new JsonResponse($jsonCaster, Response::HTTP_OK, ['accept' => 'json'], true);
     }

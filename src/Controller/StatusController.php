@@ -16,7 +16,7 @@ class StatusController extends AbstractController
     public function getStatuses(StatusRepository $statusRepository, SerializerInterface $serializer): JsonResponse
     {
         $statuses = $statusRepository->findAll();
-        $jsonStatuses = $serializer->serialize($statuses, 'json', ['groups' => 'getStatuses']);
+        $jsonStatuses = $serializer->serialize($statuses, 'json', ['groups' => 'status:read']);
 
         return new JsonResponse($jsonStatuses, Response::HTTP_OK, ['accept' => 'json'], true);
     }

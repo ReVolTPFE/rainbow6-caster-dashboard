@@ -6,6 +6,7 @@ use App\Repository\CasterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CasterRepository::class)]
 class Caster
@@ -13,19 +14,24 @@ class Caster
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["match:read", "user:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["match:read", "user:read"])]
     private ?string $nickname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["match:read", "user:read"])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["match:read", "user:read"])]
     private ?string $lastname = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["match:read", "user:read"])]
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'caster', targetEntity: BOMatch::class)]
