@@ -12,20 +12,21 @@ class Round
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["match:read", "game:read"])]
+    #[Groups(["match:read", "game:read", "round:read"])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(["match:read", "game:read"])]
+    #[Groups(["match:read", "game:read", "round:read"])]
     private ?int $roundNumber = null;
 
     #[ORM\ManyToOne(inversedBy: 'rounds')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["round:read"])]
     private ?Game $game = null;
 
     #[ORM\ManyToOne(inversedBy: 'rounds')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["match:read", "game:read"])]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups(["match:read", "game:read", "round:read"])]
     private ?Team $winnerTeam = null;
 
     public function getId(): ?int
