@@ -9,6 +9,7 @@ use App\Repository\MapRepository;
 use App\Repository\RoundRepository;
 use App\Repository\StatusRepository;
 use App\Repository\TeamRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class RoundController extends AbstractController
 {
     #[Route('', name: 'app_rounds_get_rounds', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: 'You don\'t have the right to access to this ressource.')]
     public function getRounds(RoundRepository $roundRepository, SerializerInterface $serializer): JsonResponse
     {
         $rounds = $roundRepository->findAll();
@@ -29,6 +31,7 @@ class RoundController extends AbstractController
     }
 
     #[Route('', name: 'app_rounds_create_round', methods: ['POST'])]
+    #[IsGranted('ROLE_CASTER', message: 'You don\'t have the right to access to this ressource.')]
     public function createRound(
         Request $request,
         SerializerInterface $serializer,
@@ -53,6 +56,7 @@ class RoundController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_rounds_get_one_round', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: 'You don\'t have the right to access to this ressource.')]
     public function getOneRound(Round $round, SerializerInterface $serializer): JsonResponse
     {
         $jsonRound = $serializer->serialize($round, 'json', ['groups' => 'round:read']);
@@ -61,6 +65,7 @@ class RoundController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_rounds_update_round', methods: ['PUT'])]
+    #[IsGranted('ROLE_CASTER', message: 'You don\'t have the right to access to this ressource.')]
     public function updateRound(
         Round $round,
         Request $request,

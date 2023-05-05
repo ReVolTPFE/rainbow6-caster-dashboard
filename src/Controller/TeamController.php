@@ -6,6 +6,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,7 @@ class TeamController extends AbstractController
     }
 
     #[Route('', name: 'app_teams_get_teams', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: 'You don\'t have the right to access to this ressource.')]
     public function getTeams(TeamRepository $teamRepository, SerializerInterface $serializer): JsonResponse
     {
         $teams = $teamRepository->findAll();
@@ -61,6 +63,7 @@ class TeamController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_teams_get_one_team', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: 'You don\'t have the right to access to this ressource.')]
     public function getOneTeam(Team $team, SerializerInterface $serializer): JsonResponse
     {
         $jsonTeam = $serializer->serialize($team, 'json', ['groups' => 'user:read']);
@@ -69,6 +72,7 @@ class TeamController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_teams_update_team', methods: ['PUT'])]
+    #[IsGranted('ROLE_TEAM', message: 'You don\'t have the right to access to this ressource.')]
     public function updateTeam(Team $team, Request $request, SerializerInterface $serializer, EntityManagerInterface $manager): JsonResponse
     {
         $data = $request->getContent();

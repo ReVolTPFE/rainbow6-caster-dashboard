@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\GamemodeRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class GamemodeController extends AbstractController
 {
     #[Route('', name: 'app_gamemodes_get_gamemodes', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: 'You don\'t have the right to access to this ressource.')]
     public function getGamemodes(GamemodeRepository $gamemodeRepository, SerializerInterface $serializer): JsonResponse
     {
         $gamemodes = $gamemodeRepository->findAll();

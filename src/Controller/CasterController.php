@@ -6,6 +6,7 @@ use App\Entity\Caster;
 use App\Entity\User;
 use App\Repository\CasterRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,7 @@ class CasterController extends AbstractController
     }
 
     #[Route('', name: 'app_casters_get_casters', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: 'You don\'t have the right to access to this ressource.')]
     public function getCasters(CasterRepository $casterRepository, SerializerInterface $serializer): JsonResponse
     {
         $casters = $casterRepository->findAll();
@@ -61,6 +63,7 @@ class CasterController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_casters_get_one_caster', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: 'You don\'t have the right to access to this ressource.')]
     public function getOneCaster(Caster $caster, SerializerInterface $serializer): JsonResponse
     {
         $jsonCaster = $serializer->serialize($caster, 'json', ['groups' => 'user:read']);
@@ -69,6 +72,7 @@ class CasterController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_casters_update_caster', methods: ['PUT'])]
+    #[IsGranted('ROLE_CASTER', message: 'You don\'t have the right to access to this ressource.')]
     public function updateCaster(Caster $caster, Request $request, SerializerInterface $serializer, EntityManagerInterface $manager): JsonResponse
     {
         $data = $request->getContent();

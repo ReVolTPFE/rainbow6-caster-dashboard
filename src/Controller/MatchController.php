@@ -11,6 +11,7 @@ use App\Repository\StatusRepository;
 use App\Repository\TeamBOMatchRepository;
 use App\Repository\TeamRepository;
 use DateTime;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class MatchController extends AbstractController
 {
     #[Route('', name: 'app_matches_get_matches', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: 'You don\'t have the right to access to this ressource.')]
     public function getMatches(BOMatchRepository $matchRepository, SerializerInterface $serializer): JsonResponse
     {
         $matches = $matchRepository->findAll();
@@ -31,6 +33,7 @@ class MatchController extends AbstractController
     }
 
     #[Route('', name: 'app_matches_create_match', methods: ['POST'])]
+    #[IsGranted('ROLE_CASTER', message: 'You don\'t have the right to access to this ressource.')]
     public function createMatch(
         Request $request,
         SerializerInterface $serializer,
@@ -82,6 +85,7 @@ class MatchController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_matches_get_one_match', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: 'You don\'t have the right to access to this ressource.')]
     public function getOneBOMatch(BOMatch $match, SerializerInterface $serializer): JsonResponse
     {
         $jsonBOMatch = $serializer->serialize($match, 'json', ['groups' => 'match:read']);
@@ -90,6 +94,7 @@ class MatchController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_matches_update_match', methods: ['PUT'])]
+    #[IsGranted('ROLE_CASTER', message: 'You don\'t have the right to access to this ressource.')]
     public function updateBOMatch(
         BOMatch $match,
         Request $request,
