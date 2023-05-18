@@ -1,0 +1,56 @@
+version: '3'
+services:
+  db:
+    image: mariadb:10.8.3
+    # restart : always
+    container_name: 'db-mariadb'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./docker/rainbow6_caster_dashboard_back/.database:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin:5.2.1-apache
+    # restart : always
+    container_name: 'db-interface-phpmyadmin'
+    depends_on:
+      - db
+    ports:
+      - 8000:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+  lamp:
+    build:
+      context: .
+      dockerfile: ./docker/rainbow6_caster_dashboard_back/Dockerfile
+    container_name: 'backend-symfony'
+    # restart: always
+    user: "1000:1000"
+    ports:
+      - 8080:80
+    depends_on:
+      - maildev
+    volumes:
+      - ./docker/rainbow6_caster_dashboard_back/php.ini:/usr/local/etc/php/conf.d/more_upload_size.ini
+      - ./html/backend:/var/www/html
+  maildev:
+    image: maildev/maildev:1.1.0
+    # restart: always
+    container_name: 'backend-maildev'
+    ports:
+      - 8081:80
+      - 25:25
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/rainbow6_caster_dashboard_front/Dockerfile
+    container_name: 'frontend-next'
+    # restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    volumes:
+      - ./html/frontend:/app
+      - ~/.pnpm-store:/.pnpm-store

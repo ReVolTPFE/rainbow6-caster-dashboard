@@ -54,7 +54,7 @@ RUN a2enmod rewrite
 
 RUN a2dissite 000-default.conf
 
-COPY ./000-public.conf /etc/apache2/sites-available/000-public.conf
+COPY ./docker/rainbow6_caster_dashboard_back/000-public.conf /etc/apache2/sites-available/000-public.conf
 
 RUN a2ensite 000-public.conf
 
